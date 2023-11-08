@@ -35,9 +35,9 @@ function setup() {
   // here we set the element to autoplay
   // The element will play as soon
   // as it is able to do so.
-  button = createButton('toggle');
-  button.position(0, 0);
-  button.mousePressed(toggleSong);
+  // button = createButton('toggle');
+  // button.position(0, 0);
+  // button.mousePressed(toggleSong);
   //create a new Amplitude analyzer
   analyzer = new p5.Amplitude();
   
