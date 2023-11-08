@@ -1,7 +1,12 @@
+//require('dotenv').config()
 let song, analyzer;
 let mic, fft;
+//dotenv.config();
 
-var button;
+//const clientID = process.env.CLIENT_ID;
+//const clientSecret = process.env.CLIENT_SECRET;
+
+let button;
 var volhistory = [];
 
 function preload() {
@@ -30,9 +35,9 @@ function setup() {
   // here we set the element to autoplay
   // The element will play as soon
   // as it is able to do so.
-  // button = createButton('toggle');
-  // button.position(150, 200); 
-  // button.mousePressed(toggleSong);
+  button = createButton('toggle');
+  button.position(0, 0);
+  button.mousePressed(toggleSong);
   //create a new Amplitude analyzer
   analyzer = new p5.Amplitude();
   
@@ -57,37 +62,25 @@ function draw() {
   background(0);
   // Get the average (root mean square) amplitude
   //let rms = analyzer.getLevel();
-  //fill(r, g, b, 127);
-  //stroke(0);
   stroke(255,0,0);
   noFill();
   var wave = fft.waveform();
 
   translate(width/2,height/2)
 
-  beginShape();
-  for(var i = 0 ; i <= 180 ; i++){
-    var index = floor(map(i, 0, width, 0, wave.length));
+  for(var j = -1 ; j < 2 ; j=j+2){
+    beginShape();
+    for(var i = 0 ; i <= 180 ; i++){
+      var index = floor(map(i, 0, width, 0, wave.length));
 
-    var r = map(wave[index], -1, 1, 150,350);
+      var r = map(wave[index], -1, 1, 150,350);
 
-    var x = r * sin(i);
-    var y = r * cos(i);
-    vertex (x,y)
+      var x = r * sin(i*j);
+      var y = r * cos(i*j);
+      vertex (x,y)
+      }
+    endShape();
   }
-  endShape();
-
-  beginShape();
-  for(var i = 0 ; i <= 180 ; i++){
-    var index = floor(map(i, 0, width, 0, wave.length));
-
-    var r = map(wave[index], -1, 1, 150,350);
-
-    var x = r * -sin(i);
-    var y = r * cos(i);
-    vertex (x,y)
-  }
-  endShape();
   // Draw an ellipse with size based on volume
   //ellipse(width / 2, height / 2, 10 + rms * 200, 10 + rms * 200);
   //let spectrum = fft.analyze();
